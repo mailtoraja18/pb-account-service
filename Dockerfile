@@ -9,5 +9,5 @@ RUN mvn install -Dmaven.test.skip=true
 
 FROM openjdk:11-jre-slim
 WORKDIR /app
-COPY --from=1 /app/pb-account-service/target/pb-account-service-0.0.1-SNAPSHOT.jar /app
-CMD ["java", "-jar" ,"-Dspring.profiles.active=k8","/app/account-service-0.0.1-SNAPSHOT.jar"]
+COPY --from=1 /app/target/pb-account-service-0.0.1-SNAPSHOT.jar /app
+CMD ["java", "-jar" ,"-Dspring.profiles.active=k8","/app/pb-account-service-0.0.1-SNAPSHOT.jar"]
