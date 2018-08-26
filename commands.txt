@@ -1,0 +1,3 @@
+docker run -d -v $PWD/data/bin:/home/kumar/spring-projects/piggy-bank/data -p 27017:27017 mongo
+docker run -p 9000:9000 -t springio/gs-spring-boot-docker
+./mvnw install dockerfile:build > build.log
