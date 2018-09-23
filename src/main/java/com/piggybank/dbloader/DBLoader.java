@@ -25,49 +25,49 @@ public class DBLoader {
     MongoClient mongoClient;
 
 
-
     @Bean
-    CommandLineRunner init(CustomerRepository customerRepository, AccountRepository accountRepository , TransactionRepository transactionRepository){
-        Customer aCustomer = new Customer("Rajaram","Kumar");
+    CommandLineRunner init(CustomerRepository customerRepository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
+        System.out.println("Running the db loader ...");
+        Customer aCustomer = new Customer("Rajaram", "Kumar");
         EmailAddress aEmailAddress = new EmailAddress("a@b.com");
         aCustomer.setEmailAddress(aEmailAddress);
-        Address aAddress = new Address("66 New Way","New York", "United States");
+        Address aAddress = new Address("66 New Way", "New York", "United States");
         aCustomer.setAddress(aAddress);
-        Account aAccount = new Account(aCustomer,"CHECKING");
+        Account aAccount = new Account(aCustomer, "CHECKING");
 
 
-        Customer bCustomer = new Customer("Anu" ,"Venkat");
+        Customer bCustomer = new Customer("Anu", "Venkat");
         EmailAddress bEmailAddress = new EmailAddress("b@c.com");
         bCustomer.setEmailAddress(bEmailAddress);
-        Address bAddress = new Address("66 New Way","New York", "United States");
+        Address bAddress = new Address("66 New Way", "New York", "United States");
         bCustomer.setAddress(bAddress);
-        Account bAccount = new Account(bCustomer,"CHECKING");
-
-        List<Account> accounts = Arrays.asList(aAccount,bAccount);
-        final Random RANDOM = new Random();
-        final RandomDate randomDate = new RandomDate(LocalDate.now(),LocalDate.now().minusMonths(2));
-
-        List<Transaction> randomTransactions = new ArrayList<Transaction>();
-
-        //generate random 100 transactions records
-        int recordSize = 100;
-        while(recordSize -- > 0) {
-            Account account = accounts.get(RANDOM.nextInt(accounts.size()));
-            Category category = Category.randomCategory();
-            BigDecimal amount = BigDecimal.valueOf(RandomCategoryLimits.getRandomForCategory(category));
-            Transaction t = new Transaction(account,amount,category,randomDate.nextDate());
-            randomTransactions.add(t);
-        }
-
+        Account bAccount = new Account(bCustomer, "CHECKING");
 
         return args -> {
-            if(mongoClient.getDB("acct") == null || ! ( mongoClient.getDB("acct").getCollection("customer").count() > 0)) {
+            if (mongoClient.getDB("acct") == null || !(mongoClient.getDB("acct").getCollection("customer").count() > 0)) {
                 Flux.just(aCustomer, bCustomer).flatMap(customerRepository::save)
                         .subscribe(System.out::println);
                 Thread.sleep(1000);
                 Flux.just(bAccount, aAccount).flatMap(accountRepository::save)
                         .subscribe(System.out::println);
                 Thread.sleep(1000);
+
+                List<Transaction> randomTransactions = new ArrayList<Transaction>();
+                List<Account> accounts = Arrays.asList(aAccount, bAccount);
+                final Random RANDOM = new Random();
+                final RandomDate randomDate = new RandomDate(LocalDate.now(), LocalDate.now().minusMonths(2));
+
+                accounts = accountRepository.findAll().collectList().block();
+                //generate random 100 transactions records
+                int recordSize = 100;
+                while (recordSize-- > 0) {
+                    Account account = accounts.get(RANDOM.nextInt(accounts.size()));
+                    Category category = Category.randomCategory();
+                    BigDecimal amount = BigDecimal.valueOf(RandomCategoryLimits.getRandomForCategory(category));
+                    Transaction t = new Transaction(account.getId(), amount, category, randomDate.nextDate());
+                    randomTransactions.add(t);
+                }
+
                 Flux.fromArray(randomTransactions.toArray(new Transaction[100])).flatMap(transactionRepository::save)
                         .subscribe(System.out::println);
             }

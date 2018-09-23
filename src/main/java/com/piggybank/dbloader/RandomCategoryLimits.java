@@ -8,10 +8,10 @@ public class RandomCategoryLimits {
 
     static Random random = new Random();
     static Integer INCOME_PREFIX = 5000, ENTERTAINMENT_PREFIX = 5000, GROCERY_PREFIX = 500, HOUSING_PREFIX = 1000, UTILITIES_PREFIX = 200, HEALTH_PREFIX = 300, SAVINGS_PREFIX = 600, DEBT_PREFIX = 400;
-    static Integer INCOME_BOUND = 1000 , ENTERTAINMENT_BOUND = 1000, GROCERY_BOUND = 100, HOUSING_BOUND = 700, UTILITIES_BOUND = 400, HEALTH_BOUND = 200, SAVINGS_BOUND = 400, DEBT_BOUND = 50;
+    static Integer INCOME_BOUND = 1000, ENTERTAINMENT_BOUND = 1000, GROCERY_BOUND = 100, HOUSING_BOUND = 700, UTILITIES_BOUND = 400, HEALTH_BOUND = 200, SAVINGS_BOUND = 400, DEBT_BOUND = 50;
 
 
-    public static  Integer getRandomForCategory(Category category) {
+    public static Integer getRandomForCategory(Category category) {
         if (category.equals(Category.INCOME)) {
             return INCOME_PREFIX + random.nextInt(INCOME_BOUND);
         }

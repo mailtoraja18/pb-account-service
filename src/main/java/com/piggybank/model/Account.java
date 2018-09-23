@@ -7,10 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Account extends AbstractDocument {
 
-    public final static Customer NULL_B = new Customer(null,null);
+    public final static Customer NULL_B = new Customer(null, null);
 
-
-    private Customer customer ;
+    private Customer customer;
 
     private String accountType;
 

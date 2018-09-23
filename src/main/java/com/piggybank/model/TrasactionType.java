@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 public enum TrasactionType {
-    DEBIT , CREDIT;
+
+    DEBIT, CREDIT;
 
     private static final List<TrasactionType> VALUES =
             Collections.unmodifiableList(Arrays.asList(values()));
@@ -15,7 +16,8 @@ public enum TrasactionType {
 
     private static final Random RANDOM = new Random();
 
-    public static TrasactionType randomType()  {
+    public static TrasactionType randomType() {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
+
 }

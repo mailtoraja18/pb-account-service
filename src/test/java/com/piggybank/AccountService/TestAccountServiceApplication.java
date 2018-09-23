@@ -11,16 +11,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TestAccountServiceApplication {
 
-	@Autowired
-	MongoClient mongoClient;
+    @Autowired
+    MongoClient mongoClient;
 
 
-	@Test
-	public void contextLoads() {
-		System.out.println(System.getenv());
-		mongoClient.getDatabaseNames().forEach(
-				name -> System.out.println("[" + name + "]" + mongoClient.getDB(name).getCollectionNames())
-		);
-	}
+    @Test
+    public void contextLoads() {
+        System.out.println(System.getenv());
+        mongoClient.getDatabaseNames().forEach(
+                name -> System.out.println("[" + name + "]" + mongoClient.getDB(name).getCollectionNames())
+        );
+    }
 
 }

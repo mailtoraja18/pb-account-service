@@ -9,7 +9,7 @@ public class RandomDate {
     private final Random random;
 
     public RandomDate(LocalDate minDate, LocalDate maxDate) {
-        if(maxDate.isBefore(minDate)) {
+        if (maxDate.isBefore(minDate)) {
             LocalDate temp = maxDate;
             maxDate = minDate;
             minDate = temp;

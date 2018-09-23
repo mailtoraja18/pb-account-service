@@ -21,49 +21,49 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Base class for document classes.
- * 
+ *
  * @author Oliver Gierke
  */
 public class AbstractDocument {
 
-	@Id
-	private BigInteger id;
+    @Id
+    private BigInteger id;
 
-	/**
-	 * Returns the identifier of the document.
-	 * 
-	 * @return the id
-	 */
-	public BigInteger getId() {
-		return id;
-	}
+    /**
+     * Returns the identifier of the document.
+     *
+     * @return the id
+     */
+    public BigInteger getId() {
+        return id;
+    }
 
-	/* 
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
 
-		if (this == obj) {
-			return true;
-		}
+        if (this == obj) {
+            return true;
+        }
 
-		if (this.id == null || obj == null || !(this.getClass().equals(obj.getClass()))) {
-			return false;
-		}
+        if (this.id == null || obj == null || !(this.getClass().equals(obj.getClass()))) {
+            return false;
+        }
 
-		AbstractDocument that = (AbstractDocument) obj;
+        AbstractDocument that = (AbstractDocument) obj;
 
-		return this.id.equals(that.getId());
-	}
+        return this.id.equals(that.getId());
+    }
 
-	/* 
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return id == null ? 0 : id.hashCode();
-	}
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id.hashCode();
+    }
 }

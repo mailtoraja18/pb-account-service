@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document
 public class Customer extends AbstractDocument {
 
-    private String firstName , lastName;
+    private String firstName, lastName;
 
     @Field("email")
     @Indexed(unique = true)
@@ -18,7 +18,7 @@ public class Customer extends AbstractDocument {
 
     private Address address;
 
-    public Customer(String firstName, String lastName ) {
+    public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
