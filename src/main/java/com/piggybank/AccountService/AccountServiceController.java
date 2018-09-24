@@ -2,15 +2,15 @@ package com.piggybank.AccountService;
 
 import com.piggybank.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigInteger;
 
 @RestController
+@RequestMapping("/api/v1")
 public class AccountServiceController {
 
     @Autowired
@@ -21,6 +21,16 @@ public class AccountServiceController {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @GetMapping("/search-accounts")
+    public Flux<Account> searchAccounts(@RequestParam(value = "email" , required = false) String email ,
+                                        @RequestParam(value = "lastName" , required = false) String lastName) {
+        if(lastName != null) {
+            return accountRepository.findAllByCustomer_LastName(lastName);
+        } else {
+            return accountRepository.findAllByCustomer_EmailAddress(new EmailAddress(email));
+        }
+    }
 
     @GetMapping("/customers")
     public Flux<Customer> customers() {
