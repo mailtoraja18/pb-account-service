@@ -10,7 +10,7 @@ import java.math.BigInteger;
 
 public interface TransactionRepository extends ReactiveCrudRepository<Transaction, BigInteger> {
 
-    Flux<Transaction> findAllByAccountId(BigInteger accountId);
+    Flux<Transaction> findAllByAccountIdOrderByTxnDateDesc(BigInteger accountId);
 
 }
 

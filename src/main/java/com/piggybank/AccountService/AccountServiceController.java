@@ -37,6 +37,12 @@ public class AccountServiceController {
         return customerRepository.findAll();
     }
 
+
+    @GetMapping("/account")
+    public Mono<Account> account(@RequestParam(value = "accountId" , required = true) BigInteger accountId) {
+        return accountRepository.findAccountById(accountId);
+    }
+
     @GetMapping("/accounts")
     public Flux<Account> accounts() {
         return accountRepository.findAll();
@@ -47,9 +53,9 @@ public class AccountServiceController {
         return transactionRepository.findAll();
     }
 
-    @GetMapping("/accounts/{id}/transactions")
-    public Flux<Transaction> transactionOfAccount(@PathVariable BigInteger id) {
-        return transactionRepository.findAllByAccountId(id);
+    @GetMapping("/account/transactions")
+    public Flux<Transaction> transactionOfAccount(@RequestParam(value = "accountId" , required = true) BigInteger accountId) {
+        return transactionRepository.findAllByAccountIdOrderByTxnDateDesc(accountId);
     }
 
     @GetMapping("/ref/transaction-types")
